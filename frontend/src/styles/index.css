@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@font-face {
+  font-family: "Vazirmatn-Regular";
+  font-feature-settings: "ss01";
+  src: local("Vazirmatn-Regular"),
+    url(../assets/fonts/Vazirmatn-RD-FD-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Vazirmatn-Medium";
+  font-feature-settings: "ss01";
+  src: local("Vazirmatn-Medium"),
+    url(../assets/fonts/Vazirmatn-RD-FD-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Vazirmatn-Bold";
+  font-feature-settings: "ss01";
+  src: local("Vazirmatn-Bold"),
+    url(../assets/fonts/Vazirmatn-RD-FD-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Entezar";
+  src: local("Entezar"),
+    url(../assets/fonts/Entezar.ttf) format("truetype");
+}
+@font-face {
+  font-family: "IR-Yekan-Bold";
+  src: local("IR-Yekan-Bold"),
+    url(../assets/fonts/IR-Yekan-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "IR-Yekan-Regular";
+  src: local("IR-Yekan-Regular"),
+    url(../assets/fonts/IR-Yekan-Regular.ttf) format("truetype");
+}

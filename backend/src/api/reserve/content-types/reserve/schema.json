@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reserves",
+  "info": {
+    "singularName": "reserve",
+    "pluralName": "reserves",
+    "displayName": "Reserve",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "سالن مبلمان",
+        "میز بیلیارد",
+        "دربست"
+      ]
+    },
+    "time": {
+      "type": "string"
+    },
+    "phoneNum": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

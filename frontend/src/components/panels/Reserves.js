@@ -1,0 +1,115 @@
+import { Box, Button, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { COLORS, FONTS } from '../../styles/Theme'
+import { useForceUpdate } from '../hooks/useForceUpdate'
+
+const ReserveItem = ({ id, type, time, phoneNum, onDelete, ...props }) => {
+  const handleClick = async () => {
+    try {
+      await fetch(`http://localhost:4000/reserve/${id}`, { method: 'DELETE' })
+      onDelete()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return (
+    <Box sx={styles.notifItem} {...props}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+        <Typography sx={styles.notifTitle}>{type}</Typography>
+        <Button sx={styles.deleteBtn} onClick={handleClick} >حذف</Button>
+      </Box>
+      <Typography sx={styles.notifDesc}>درخواست برای ساعت {time}، شماره تماس: {phoneNum}</Typography>
+    </Box>
+  )
+}
+
+const Reserves = () => {
+  const [ReserveData, setReserveData] = useState([])
+  const [forceUpdate, refresh] = useForceUpdate()
+
+  useEffect(() => {
+    const controller = new AbortController()
+    const getData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/reserve', { signal: controller.signal })
+        if (response.ok) {
+          const result = await response.json()
+          setReserveData(result)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getData()
+    return () => {
+      controller.abort()
+    }
+  }, [refresh])
+
+  return (
+    <Box sx={styles.container}>
+      {ReserveData.map((item) => (
+        <ReserveItem
+          key={item.id}
+          id={item.id}
+          type={item.type}
+          time={item.time}
+          phoneNum={item.phoneNum}
+          onDelete={forceUpdate}
+        />
+      ))}
+    </Box>
+  )
+}
+
+export default Reserves
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: 5,
+    textAlign: 'center',
+    gap: 1,
+  },
+  notifItem: {
+    flexDirection: 'row',
+    border: '1px solid',
+    borderColor: COLORS.lightGray,
+    borderRadius: 4,
+    width: '100%'
+  },
+  notifTitle: {
+    fontFamily: FONTS.VZB,
+    fontSize: 18,
+    color: 'black',
+    bgcolor: COLORS.lightGray,
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 12,
+    width: 'fit-content',
+    paddingX: 1
+  },
+  notifDesc: {
+    textAlign: 'right',
+    fontFamily: FONTS.VZR,
+    fontSize: { sm: 18, xs: 14 },
+    color: COLORS.lightGray,
+    lineHeight: 1.2,
+    padding: 1
+  },
+  deleteBtn: {
+    padding: 0,
+    color: 'red',
+    bgcolor: COLORS.lightGray,
+    fontFamily: FONTS.VZB,
+    borderTopLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    '&:hover': {
+      color: 'red',
+      bgcolor: COLORS.lightGray,
+    }
+  },
+}
