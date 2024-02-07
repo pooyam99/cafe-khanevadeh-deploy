@@ -13,7 +13,7 @@ const Menu = () => {
     const controller = new AbortController()
     const getData = async () => {
       try {
-        const response = await fetch('http://localhost:1337/api/menu-items', { signal: controller.signal })
+        const response = await fetch('http://admin.anidlws.xyz/api/menu-items', { signal: controller.signal })
         if (response.ok) {
           const result = await response.json()
           setMenuData(result.data)
