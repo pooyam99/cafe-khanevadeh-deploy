@@ -9,7 +9,7 @@ const Home = () => {
     const controller = new AbortController()
     const getData = async () => {
       try {
-        const response = await fetch('http://admin.anidlws.xyz/api/notifications', {
+        const response = await fetch('https://admin.anidlws.xyz/api/notifications', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' }
         })
@@ -81,19 +81,19 @@ const Home = () => {
 
 const imageUrl = [
   {
-    img: "http://admin.anidlws.xyz/uploads/home_1_df18571ce1.jpg",
+    img: "https://admin.anidlws.xyz/uploads/home_1_e91f32056e.jpg",
     title: 'Cafe Hall 1',
   },
   {
-    img: "http://admin.anidlws.xyz/uploads/home_2_58d79257f1.jpg",
+    img: "https://admin.anidlws.xyz/uploads/home_2_8483d81372.jpg",
     title: 'Cafe Hall 2',
   },
   {
-    img: "http://admin.anidlws.xyz/uploads/home_3_ecbccb634a.jpg",
+    img: "https://admin.anidlws.xyz/uploads/home_3_47c26f0f13.jpg",
     title: 'Cafe Hall 3',
   },
   {
-    img: "http://admin.anidlws.xyz/uploads/home_4_d07607f18c.jpg",
+    img: "https://admin.anidlws.xyz/uploads/home_4_c2f9a8d84e.jpg",
     title: 'Cafe Hall 4',
   },
 ]

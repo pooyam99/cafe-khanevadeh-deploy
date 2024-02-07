@@ -30,7 +30,7 @@ const Contact = () => {
     e.preventDefault();
     console.log({ name, phoneNum, message })
     try {
-      await fetch('http://admin.anidlws.xyz/api/messages', {
+      await fetch('https://admin.anidlws.xyz/api/messages', {
         method: 'POST',
         body: JSON.stringify({ data: { name, phoneNum, message } }),
         headers: { 'Content-Type': 'application/json' }

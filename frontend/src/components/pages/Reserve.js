@@ -29,7 +29,7 @@ const Reserve = () => {
     e.preventDefault();
     console.log({ time, type, phoneNum })
     try {
-      await fetch('http://admin.anidlws.xyz/api/reserves', {
+      await fetch('https://admin.anidlws.xyz/api/reserves', {
         method: 'POST',
         body: JSON.stringify({ data: { type, time, phoneNum } }),
         headers: { 'Content-Type': 'application/json' }
@@ -50,7 +50,7 @@ const Reserve = () => {
         <Box sx={styles.rightContainer}>
           <Typography sx={styles.title}>سالن مبلمان</Typography>
           <img
-            src={"http://admin.anidlws.xyz/uploads/reserve_1_58834a3bb3.jpg"}
+            src={"https://admin.anidlws.xyz/uploads/reserve_1_7990b7c8c8.jpg"}
             alt='Sofa'
             width='100%'
             height='360'
@@ -72,7 +72,7 @@ const Reserve = () => {
         <Box sx={styles.leftContainer}>
           <Typography sx={styles.title}>میز بیلیارد</Typography>
           <img
-            src={"http://admin.anidlws.xyz/uploads/reserve_2_6a5455c8c5.jpg"}
+            src={"https://admin.anidlws.xyz/uploads/reserve_2_d13472d679.jpg"}
             alt='Billiard'
             width='100%'
             height='360'
