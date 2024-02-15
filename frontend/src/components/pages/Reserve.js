@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box, Button, ListSubheader, Typography, } from '@mui/material';
 import { COLORS, FONTS } from '../../styles/Theme';
 import { ReserveInput, ReserveSelect, SelectItem } from '../StyledComponents'
+import { toast } from 'sonner';
 
 const Reserve = () => {
   const regex = new RegExp('^(\\+98|0)?9\\d{9}$');
@@ -10,6 +11,8 @@ const Reserve = () => {
   const [time, setTime] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [isValid, setIsValid] = useState(false);
+
+  const msg = `رزرو\n● نوع: ${type}\n● زمان: ${time}\n● شماره: ${phoneNum}`
 
   const handleTypeChange = (e) => {
     setType(e.target.value);
@@ -27,20 +30,31 @@ const Reserve = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ time, type, phoneNum })
-    try {
-      await fetch('https://admin.anidlws.xyz/api/reserves', {
-        method: 'POST',
-        body: JSON.stringify({ data: { type, time, phoneNum } }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      setType('')
-      setTime('')
-      setPhoneNum('')
-      setIsValid(false)
-    } catch (error) {
-      console.error(error)
-    }
+    toast.promise(
+      Promise.all([
+        fetch('https://admin.anidlws.xyz/api/reserves', {
+          method: 'POST',
+          body: JSON.stringify({ data: { type, time, phoneNum } }),
+          headers: { 'Content-Type': 'application/json' }
+        }),
+        fetch('https://admin.anidlws.xyz/telegram-bot-strapi/send-message', {
+          method: 'POST',
+          body: JSON.stringify({ "message": msg }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+      ]),
+      {
+        loading: 'درحال ارسال اطلاعات...',
+        success: () => {
+          setType('')
+          setTime('')
+          setPhoneNum('')
+          setIsValid(false)
+          return 'درخواست با موفقیت ثبت شد.'
+        },
+        error: 'ثبت اطلاعات با شکست مواجه شد، لطفا دوباره تلاش کنید.',
+      }
+    )
   }
 
   return (

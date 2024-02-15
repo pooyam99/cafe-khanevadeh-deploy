@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import { Box, Typography, Button } from '@mui/material';
 import { COLORS, FONTS } from '../../styles/Theme';
 import { Input, TextArea } from '../StyledComponents'
+import { toast } from 'sonner';
 
 const Contact = () => {
   const regex = new RegExp('^(\\+98|0)?9\\d{9}$');
-  
+
   const [name, setName] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [message, setMessage] = useState('');
   const [isValid, setIsValid] = useState(false);
+
+  const msg = `پیغام\n● نام: ${name}\n● شماره: ${phoneNum}\n● متن پیغام: «${message}»`
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -28,19 +31,30 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, phoneNum, message })
-    try {
-      await fetch('https://admin.anidlws.xyz/api/messages', {
-        method: 'POST',
-        body: JSON.stringify({ data: { name, phoneNum, message } }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      setName('')
-      setPhoneNum('')
-      setMessage('')
-    } catch (error) {
-      console.error(error)
-    }
+    toast.promise(
+      Promise.all([
+        fetch('https://admin.anidlws.xyz/api/messages', {
+          method: 'POST',
+          body: JSON.stringify({ data: { name, phoneNum, message } }),
+          headers: { 'Content-Type': 'application/json' }
+        }),
+        fetch('https://admin.anidlws.xyz/telegram-bot-strapi/send-message', {
+          method: 'POST',
+          body: JSON.stringify({ "message": msg }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+      ]),
+      {
+        loading: 'درحال ارسال اطلاعات...',
+        success: () => {
+          setName('')
+          setPhoneNum('')
+          setMessage('')
+          return 'پیام با موفقیت ارسال شد.'
+        },
+        error: 'ثبت اطلاعات با شکست مواجه شد، لطفا دوباره تلاش کنید.',
+      }
+    )
   }
 
   return (

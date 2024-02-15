@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Main, Admin } from './components/roots';
 import { Home, Menu, Reserve, Contact } from './components/pages';
+import { Toaster } from 'sonner';
+import { GlobalStyles } from './styles/GlobalStyles';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <Toaster dir='rtl' toastOptions={{ style: GlobalStyles.toaster }} />
+    </>
   );
 }
 
